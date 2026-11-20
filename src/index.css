@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #080808;
+    color: #f5f5f5;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: #080808;
+    color: #f5f5f5;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Preloader Ship's Wheel Animation */
+@keyframes helmSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.helm-wheel-spin {
+  animation: helmSpin 4.5s linear infinite;
+}
+
+.preloader-overlay {
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preloader-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Marine Compass Page-Switching Loader Animation */
+@keyframes compassRoseRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes compassNeedleSweep {
+  0% {
+    transform: rotate(-38deg);
+  }
+  35% {
+    transform: rotate(16deg);
+  }
+  65% {
+    transform: rotate(-10deg);
+  }
+  85% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(-38deg);
+  }
+}
+
+.compass-rose-spin {
+  transform-origin: 48px 48px;
+  animation: compassRoseRotate 12s linear infinite;
+}
+
+.compass-needle-seek {
+  transform-origin: 48px 48px;
+  animation: compassNeedleSweep 2.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.route-compass-overlay {
+  transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.route-compass-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Realistic Smooth Ship Heave & Continuous 2-Line Wave Scroll */
+@keyframes shipSwellMotion {
+  0% {
+    transform: translateY(0.8px) rotate(-1.6deg);
+  }
+  25% {
+    transform: translateY(-1.4px) rotate(0.4deg);
+  }
+  50% {
+    transform: translateY(-2.2px) rotate(1.7deg);
+  }
+  75% {
+    transform: translateY(0.2px) rotate(-0.5deg);
+  }
+  100% {
+    transform: translateY(0.8px) rotate(-1.6deg);
+  }
+}
+
+@keyframes continuousWaveA {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes continuousWaveB {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.ship-swell {
+  transform-origin: 42px 23px;
+  animation: shipSwellMotion 4.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.wave-track-1 {
+  animation: continuousWaveA 3.6s linear infinite;
+}
+
+.wave-track-2 {
+  animation: continuousWaveB 5.2s linear infinite;
+}
+
+.wave-viewport-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+
+/* Darkroom Radial Vignette Shadow for Header Background Portrait */
+.hero-portrait-vignette {
+  background: radial-gradient(
+    ellipse 74% 78% at 62% 36%,
+    rgba(8, 8, 8, 0) 20%,
+    rgba(8, 8, 8, 0.58) 62%,
+    rgba(8, 8, 8, 0.96) 94%
+  );
+}
+
+@media (max-width: 767px) {
+  .hero-portrait-vignette {
+    background: radial-gradient(
+      ellipse 88% 68% at 50% 24%,
+      rgba(8, 8, 8, 0.04) 18%,
+      rgba(8, 8, 8, 0.68) 60%,
+      rgba(8, 8, 8, 0.98) 90%
+    );
+  }
+}
+
+/* Tactile click ripple effect on social icons */
+@keyframes socialClickPulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45);
+  }
+  65% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 9px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.social-icon-btn {
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.social-icon-btn:active {
+  transform: scale(0.9) translateY(0);
+}
+
+.social-icon-btn.is-clicked {
+  animation: socialClickPulse 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Auto-scrolling quote & signature transition */
+.quote-stage {
+  transition: opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quote-stage.is-fading {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* Monochrome loading shimmer effect ONLY for gallery & blog images */
+@keyframes monochromeShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.img-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: #141414;
+}
+
+.img-shimmer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.09) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  animation: monochromeShimmer 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.img-shimmer.is-loaded {
+  background-color: transparent;
+}
+
+.img-shimmer.is-loaded::before {
+  opacity: 0;
+  animation: none;
+  display: none;
+}
+
+.img-shimmer img {
+  opacity: 0;
+  transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-shimmer.is-loaded img {
+  opacity: 1;
+}
+
+/* SPA View Enter Transition */
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spa-view-active {
+  animation: viewFadeIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hide scrollbar for clean horizontal mobile strip */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
